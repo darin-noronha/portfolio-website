@@ -1,17 +1,14 @@
 import React, { createContext, useState, useMemo } from 'react';
 
-// Create the context
 export const ThemeContext = createContext();
 
-// Create the provider component
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('dark'); // Default theme is light
+  const [theme, setTheme] = useState('dark');
 
   const toggleTheme = () => {
     setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
-  // useMemo prevents unnecessary re-renders
   const value = useMemo(() => ({ theme, toggleTheme }), [theme]);
 
   return (

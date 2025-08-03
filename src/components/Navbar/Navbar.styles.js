@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
 export const NavContainer = styled.nav`
   position: fixed;
@@ -8,42 +10,66 @@ export const NavContainer = styled.nav`
   height: 70px;
   padding: 0 4rem;
   background-color: var(--background);
-  
   display: flex;
   align-items: center;
-  justify-content: flex-end; /* Change to flex-end */
+  justify-content: space-between;
   z-index: 100;
-
+  gap: 1rem;
   @media (max-width: 768px) {
-    padding: 0 1.5rem;
+    padding: 0 1rem;
+  }
+`;
+
+export const NavName = styled(Link)`
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--primary-text);
+  text-decoration: none;
+  @media (max-width: 768px) {
+    font-size: 1.25rem; 
   }
 `;
 
 
-// A new container to group links on the right
-export const NavRight = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-`;
 
 export const NavLinks = styled.div`
   display: flex;
-  gap: 1.5rem; /* Space between "Home" and "Projects" */
-
-  @media (max-width: 768px) {
-    display: none; /* Hide text links on smaller screens */
-  }
+  align-items: center;
+  background-color: var(--border);
+  border-radius: 30px;
+  padding: 1.5px;
+  position: relative;
+  
 `;
 
-export const NavLink = styled.a`
-  font-size: 1rem;
+export const MagicInk = styled.div`
+  position: absolute;
+  top: 4px;
+  height: calc(100% - 8px);
+  background-color: var(--card-bg);
+  border-radius: 40px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 1;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  left: ${props => props.left || 0}px;
+  width: ${props => props.width || 0}px;
+  opacity: ${props => (props.width ? 1 : 0)};
+`;
+
+export const NavLink = styled(HashLink)`
+  font-size: 0.9rem;
+  font-weight: 500;
   color: var(--secondary-text);
-  padding: 0.5rem 0;
-  transition: color 0.2s ease-in-out;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  position: relative;
+  z-index: 2;
+  transition: color 0.4s ease;
 
   &:hover {
     color: var(--primary-text);
   }
-`;
 
+`;

@@ -14,7 +14,6 @@ export const FooterText = styled.p`
   color: var(--secondary-text);
 `;
 
-// Styles for the social icons, moved from Navbar.styles.js
 export const SocialLinks = styled.div`
   display: flex;
   align-items: center;
@@ -23,9 +22,10 @@ export const SocialLinks = styled.div`
 
 export const SocialIcon = styled.a`
   color: var(--secondary-text);
-  transition: color 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
 
   &:hover {
     color: var(--primary-text);
+    transform: translateY(-3px);
   }
 `;
