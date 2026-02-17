@@ -5,17 +5,23 @@ const PageContainer = styled.div`
   min-height: 60vh;
   padding: 4rem 0;
   text-align: center;
+  width: 100%; /* standard width */
+  margin: 0 auto;
 `;
 
 const Title = styled.h1`
   font-size: 2.5rem;
   margin-bottom: 2rem;
+  font-family: var(--font-heading);
+  color: var(--primary-text);
 `;
 
 const Content = styled.p`
   color: var(--secondary-text);
-  max-width: 600px;
   margin: 0 auto;
+  font-family: var(--font-body);
+  line-height: 1.6;
+  padding: 0 1rem;
 `;
 
 const Art = () => {

@@ -25,7 +25,7 @@ export const HeroSubtitle = styled.h2`
   font-weight: 400;
   color: var(--accent);
   margin-bottom: 1.5rem;
-  text-align: center; 
+  text-align: left; 
 `;
 
 export const HeroBio = styled.p`

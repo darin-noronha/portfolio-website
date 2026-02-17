@@ -1,16 +1,31 @@
-import React, { useState, useRef } from 'react';
-// We no longer need NavRight from styles
-import { NavContainer, NavName, NavLinks, NavLink, MagicInk } from './Navbar.styles';
-import ThemeToggle from '../ThemeToggle/ThemeToggle';
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { NavContainer, NavName, NavLinks, NavLink, MagicInk, PortalLink, RightSection } from './Navbar.styles';
+
+// Removed the ThemeToggle import
+// import ThemeToggle from '../ThemeToggle/ThemeToggle'; 
+
+const NAV_CONFIG = {
+  engineer: [
+    { label: 'home', path: '/#home' },
+    { label: 'projects', path: '/#projects' },
+    { label: 'contact', path: '/#contact' }
+  ],
+  artist: [
+    { label: 'art', path: '/art' },
+    { label: 'works', path: '/art#works' },
+    { label: 'bio', path: '/art#bio' }
+  ]
+};
 
 const Navbar = () => {
   const [inkStyle, setInkStyle] = useState({});
-  const linksContainerRef = useRef(null);
+  const location = useLocation();
+  const isArtMode = location.pathname.startsWith('/art');
+  const currentLinks = isArtMode ? NAV_CONFIG.artist : NAV_CONFIG.engineer;
 
   const handleMouseEnter = (e) => {
-    const linkElement = e.currentTarget;
-    const { offsetLeft, offsetWidth } = linkElement;
-    setInkStyle({ left: offsetLeft, width: offsetWidth });
+    setInkStyle({ left: e.currentTarget.offsetLeft, width: e.currentTarget.offsetWidth });
   };
 
   const handleMouseLeave = () => {
@@ -20,15 +35,22 @@ const Navbar = () => {
   return (
     <NavContainer>
       <NavName to="/">darin</NavName>
-
-      <NavLinks ref={linksContainerRef} onMouseLeave={handleMouseLeave}>
+      
+      <NavLinks onMouseLeave={handleMouseLeave}>
         <MagicInk {...inkStyle} />
-        <NavLink smooth to="/#home" onMouseEnter={handleMouseEnter}>home</NavLink>
-        <NavLink smooth to="/#projects" onMouseEnter={handleMouseEnter}>projects</NavLink>
-        <NavLink smooth to="/#contact" onMouseEnter={handleMouseEnter}>contact</NavLink>
+        {currentLinks.map(link => (
+          <NavLink key={link.label} smooth to={link.path} onMouseEnter={handleMouseEnter}>
+            {link.label}
+          </NavLink>
+        ))}
       </NavLinks>
 
-      <ThemeToggle />
+      <RightSection>
+        <PortalLink to={isArtMode ? '/' : '/art'}>
+          {isArtMode ? 'dev ↗' : 'art ↗'}
+        </PortalLink>
+        {/* ThemeToggle component removed from here */}
+      </RightSection>
     </NavContainer>
   );
 };
