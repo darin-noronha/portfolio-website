@@ -11,9 +11,13 @@ export const NavContainer = styled.nav`
   background-color: var(--background);
   z-index: 100;
   transition: var(--theme-transition);
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-
+  
+  /* Ensure no border exists */
+  border: none;
+  box-shadow: none;
+  
   /* DESKTOP LAYOUT */
+  /* ... existing layout code ... */
   height: 70px;
   padding: 0 2rem; 
   display: grid;
@@ -21,17 +25,38 @@ export const NavContainer = styled.nav`
   grid-template-areas: "left center right";
   align-items: center;
 
-  /* MOBILE LAYOUT (The Fix) */
+  /* MOBILE LAYOUT */
   @media (max-width: 768px) {
-    height: auto; /* Let it grow tall */
+    /* ... existing mobile code ... */
+    height: auto;
     padding: 1rem;
-    
-    /* Stack items: Name/Button on top, Links below */
     grid-template-columns: 1fr 1fr;
     grid-template-areas: 
       "left right"
       "center center";
-    row-gap: 1rem; /* Space between the rows */
+    row-gap: 1rem;
+  }
+`;
+
+/* ... NavName ... */
+
+export const NavLinks = styled.div`
+  grid-area: center;
+  display: flex;
+  
+  /* CHANGED: Set to transparent if you want to remove the 'pill' background */
+  /* If you want the grey pill back, use: var(--border) */
+  background-color: transparent; 
+  
+  border-radius: 30px;
+  padding: 4px;
+  position: relative;
+  justify-self: center;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: space-between;
+    max-width: 300px;
   }
 `;
 
@@ -45,22 +70,7 @@ export const NavName = styled(Link)`
   justify-self: start;
 `;
 
-export const NavLinks = styled.div`
-  grid-area: center;
-  display: flex;
-  background-color: var(--border);
-  border-radius: 30px;
-  padding: 4px;
-  position: relative;
-  justify-self: center;
-  
-  /* On mobile, ensure it doesn't overflow */
-  @media (max-width: 768px) {
-    width: 100%;
-    justify-content: space-between; /* Spread links evenly */
-    max-width: 300px; /* Keep it neat */
-  }
-`;
+
 
 export const RightSection = styled.div`
   grid-area: right;

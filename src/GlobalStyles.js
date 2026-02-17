@@ -18,6 +18,13 @@ const GlobalStyles = createGlobalStyle`
     --card-bg: #112240;
     --theme-transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     --border-radius-card: 12px;
+
+    /* NEW: Art Gallery Tokens (Engineer Default / Dark Mode) */
+    --frame-border-color: #233554;   /* Dark bezel */
+    --matting-bg: #112240;           /* Dark inner matting */
+    --matting-padding: 1rem;
+    --gallery-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    --caption-color: #8892b0;
   }
 
   body[data-mode="artist"] {
@@ -31,6 +38,13 @@ const GlobalStyles = createGlobalStyle`
     --secondary-text: #636e72;
     --border: #dfe6e9;
     --card-bg: #f9f9f9;
+    
+    /* NEW: Art Gallery Tokens (Artist Override / Gallery Mode) */
+    --frame-border-color: #1a1a1a;   /* Classic black frame */
+    --matting-bg: #ffffff;           /* Clean white matting */
+    --matting-padding: 1.5rem;       /* Luxurious spacing */
+    --gallery-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    --caption-color: #636e72;
   }
 
   body {
