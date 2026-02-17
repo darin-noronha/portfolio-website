@@ -1,4 +1,5 @@
-import styled, { keyframes } from 'styled-components';
+/* src/components/Navbar/Navbar.styles.js */
+import styled, { keyframes } from 'styled-components'; // Removed 'css' import as we don't need it anymore
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
@@ -8,27 +9,58 @@ export const NavContainer = styled.nav`
   position: sticky; 
   top: 0;
   width: 100%; 
-  background-color: var(--background);
   z-index: 100;
-  transition: var(--theme-transition);
-  
-  /* Ensure no border exists */
-  border: none;
-  box-shadow: none;
-  
-  /* DESKTOP LAYOUT */
-  /* ... existing layout code ... */
-  height: 70px;
   padding: 0 2rem; 
+  
+  /* 1. THE FIX: Animate properties directly based on the prop */
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* Matches your theme transition */
+  
+  /* Height morphs smoothly between 70px (Home) and 90px (Art) */
+  height: ${props => props.$isArtMode ? '90px' : '70px'};
+  
+  /* Background fades smoothly between Solid (Home) and Transparent (Art) */
+  background-color: ${props => props.$isArtMode ? 'transparent' : 'var(--background)'};
+  
+  /* Grid Layout Setup */
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   grid-template-areas: "left center right";
   align-items: center;
 
+  /* 2. THE FIX: The Fog Curtain exists PERMANENTLY, we just fade it */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; 
+    left: 0; 
+    right: 0;
+    z-index: -1;
+    
+    /* Always tall enough for the art mode */
+    height: calc(100% + 40px);
+    
+    /* The Gradient Logic */
+    background: linear-gradient(
+      to bottom, 
+      var(--background) 0%, 
+      var(--background) 40%, 
+      rgba(0,0,0,0) 100%
+    );
+    
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    pointer-events: none;
+    
+    /* 3. THE MAGIC: Smoothly fade opacity instead of display:none */
+    opacity: ${props => props.$isArtMode ? 1 : 0};
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
   /* MOBILE LAYOUT */
   @media (max-width: 768px) {
-    /* ... existing mobile code ... */
-    height: auto;
+    height: auto; 
     padding: 1rem;
     grid-template-columns: 1fr 1fr;
     grid-template-areas: 

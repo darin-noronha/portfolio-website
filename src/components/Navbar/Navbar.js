@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { NavContainer, NavName, NavLinks, NavLink, MagicInk, PortalLink, RightSection } from './Navbar.styles';
 
-// Removed the ThemeToggle import
-// import ThemeToggle from '../ThemeToggle/ThemeToggle'; 
-
 const NAV_CONFIG = {
   engineer: [
     { label: 'home', path: '/#home' },
@@ -33,7 +30,8 @@ const Navbar = () => {
   };
 
   return (
-    <NavContainer>
+    /* THE FIX: Pass the mode to the styles */
+    <NavContainer $isArtMode={isArtMode}>
       <NavName to="/">darin</NavName>
       
       <NavLinks onMouseLeave={handleMouseLeave}>
@@ -49,7 +47,6 @@ const Navbar = () => {
         <PortalLink to={isArtMode ? '/' : '/art'}>
           {isArtMode ? 'dev ↗' : 'art ↗'}
         </PortalLink>
-        {/* ThemeToggle component removed from here */}
       </RightSection>
     </NavContainer>
   );
