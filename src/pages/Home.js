@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Hero from '../components/Hero/Hero';
 import ProjectsGrid from '../components/ProjectsGrid/ProjectsGrid';
 
-// CLEAN UP: Simple wrapper, no hacks
 const HomeContainer = styled.div`
   width: 100%;
   margin: 0 auto;

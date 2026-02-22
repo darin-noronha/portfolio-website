@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export const HeroContainer = styled.section`
   /* Keep these properties */
   min-height: 50vh;
-  padding-top: 2rem;
+  padding-top: 0rem;
   padding-bottom: 6rem;
   scroll-margin-top: 70px;
 

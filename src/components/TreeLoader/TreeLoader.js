@@ -2,6 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { LoaderOverlay, TreeSVG } from './TreeLoader.styles';
 
+const SPEED_FACTOR = 0.5; 
+
 // 1. Branch drawing physics
 const branchDraw = {
   hidden: { pathLength: 0, opacity: 0 },
@@ -9,15 +11,21 @@ const branchDraw = {
     pathLength: 1,
     opacity: 1,
     transition: {
-      pathLength: { delay: custom.delay, duration: 1.2, ease: "easeOut" },
-      opacity: { delay: custom.delay, duration: 0.1 }
+      // Multiply the delay and duration by the speed factor
+      pathLength: { 
+        delay: custom.delay * SPEED_FACTOR, 
+        duration: 1.2 * SPEED_FACTOR, 
+        ease: "easeOut" 
+      },
+      opacity: { 
+        delay: custom.delay * SPEED_FACTOR, 
+        duration: 0.1 
+      }
     }
   })
 };
-
 // 2. Realistic Leaf physics
 const leafDraw = {
-  // We use custom props to set the exact position, scale, and rotation
   hidden: (custom) => ({ 
     scale: 0, 
     opacity: 0, 
@@ -32,7 +40,8 @@ const leafDraw = {
     y: custom.y,
     rotate: custom.rotate,
     transition: {
-      delay: custom.delay,
+      // Multiply the delay by the speed factor
+      delay: custom.delay * SPEED_FACTOR,
       type: "spring",
       stiffness: 250,
       damping: 15

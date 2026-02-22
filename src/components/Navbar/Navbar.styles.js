@@ -51,16 +51,20 @@ export const RightSection = styled.div`
   grid-area: right;
   display: flex;
   align-items: center;
+  
+  /* Pushes the container to the far right of its grid track */
   justify-self: end;
   
-  /* Desktop margin - The absolute arrow will float into this space */
+  /* Desktop margin: Provides a healthy buffer from the edge */
   margin-right: 4rem; 
 
   @media (max-width: 768px) {
-    margin-right: 0;
+    /* THE FIX: Changed from 0 to 2rem. 
+       This ensures the absolute-positioned arrow never gets cut off 
+       by the edge of the mobile screen when it expands. */
+    margin-right: 2rem; 
   }
 `;
-
 /* --- THE FIX START --- */
 
 export const NavArrow = styled.span`
