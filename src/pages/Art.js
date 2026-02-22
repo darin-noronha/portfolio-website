@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion'; // 1. Import motion
+import { motion, AnimatePresence } from 'framer-motion'; 
 import ArtGallery from '../components/ArtGallery/ArtGallery';
+import TreeLoader from '../components/TreeLoader/TreeLoader';
 
-// 2. Convert to styled(motion.div) to enable animations
 const PageContainer = styled(motion.div)`
   min-height: 100vh;
-  /* Keep the reduced padding so text sits high */
   padding: 3rem 1rem 2rem 1rem; 
   text-align: center;
   width: 100%;
@@ -24,41 +23,70 @@ const Intro = styled.p`
 `;
 
 const Art = () => {
+  // State to control the loading screen visibility
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // 2.5 seconds gives the tree enough time to draw before fading away
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2800);
+
+    // Cleanup timer on unmount
+    return () => clearTimeout(timer);
+  }, []);
+
   const artPieces = [
     {
-      title: "Entropy in Blue", 
+      title: "monster portrait", 
       image: "/guash1.jpeg", 
-      description: "An exploration of chaotic systems using oil on canvas.",
-      medium: "Oil on Canvas",
-      year: "2024"
+      description: "gouache on wood panel",
+      medium: "gouache on wood panel"
     },
     {
-      title: "Structure V",
+      title: "title",
+      image: "/acrylic_canvas1.jpeg",
+      description: "acrylic on canvas",
+      medium: "acrylic on canvas"
+    },
+    {
+      title: "king of the world",
       image: "/aura.jpeg",
-      description: "Geometric studies inspired by brutalist architecture.",
-      medium: "Charcoal",
-      year: "2023"
+      description: "acrylic on paper",
+      medium: "acrylic on paper"
+    },
+    {
+      title: "blue face",
+      image: "/blue_face.jpeg",
+      description: "acrylic on paper",
+      medium: "acrylic on paper"
     }
   ];
 
   return (
-    <PageContainer
-      /* 3. THE FIX: Sync animation with Navbar */
-      initial={{ opacity: 0, y: 20 }} // Starts slightly lower and invisible
-      animate={{ opacity: 1, y: 0 }}  // Fades in and slides up
-      exit={{ opacity: 0 }}
-      transition={{ 
-        duration: 0.5, // Matches Navbar duration exactly
-        ease: [0.4, 0, 0.2, 1] // Matches Navbar physics exactly
-      }}
-    >
-      <Intro>
-        a collection of studies, sketches, and finished works. 
-        exploring the analog side of creation.
-      </Intro>
-      
-      <ArtGallery pieces={artPieces} />
-    </PageContainer>
+    <>
+      {/* 1. The Full-Screen Loader Overlay */}
+      <AnimatePresence>
+        {isLoading && <TreeLoader key="tree-loader" />}
+      </AnimatePresence>
+
+      {/* 2. The Actual Page Content (loads instantly underneath the overlay) */}
+      <PageContainer
+        initial={{ opacity: 0, y: 20 }} 
+        animate={{ opacity: 1, y: 0 }}  
+        exit={{ opacity: 0 }}
+        transition={{ 
+          duration: 0.5, 
+          ease: [0.4, 0, 0.2, 1] 
+        }}
+      >
+        <Intro>
+          a collection of pieces from my fall '25 painting class
+        </Intro>
+        
+        <ArtGallery pieces={artPieces} />
+      </PageContainer>
+    </>
   );
 };
 

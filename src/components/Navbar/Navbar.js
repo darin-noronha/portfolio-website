@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { NavContainer, NavName, NavLinks, NavLink, MagicInk, PortalLink, RightSection } from './Navbar.styles';
+import { useMode } from '../../context/ModeContext';
+import { 
+  NavContainer, 
+  NavName, 
+  NavLinks, 
+  NavLink, 
+  MagicInk, 
+  RightSection,
+  SwitchButton, 
+  NavArrow 
+} from './Navbar.styles';
 
 const NAV_CONFIG = {
   engineer: [
@@ -9,44 +18,64 @@ const NAV_CONFIG = {
     { label: 'contact', path: '/#contact' }
   ],
   artist: [
-    { label: 'art', path: '/art' },
+    { label: 'gallery', path: '/art' },
     { label: 'works', path: '/art#works' },
-    { label: 'bio', path: '/art#bio' }
+    { label: 'statement', path: '/art#bio' }
   ]
 };
 
 const Navbar = () => {
-  const [inkStyle, setInkStyle] = useState({});
-  const location = useLocation();
-  const isArtMode = location.pathname.startsWith('/art');
+  const { isArtMode } = useMode();
+  const [inkStyle, setInkStyle] = useState({ opacity: 0 });
+
   const currentLinks = isArtMode ? NAV_CONFIG.artist : NAV_CONFIG.engineer;
 
   const handleMouseEnter = (e) => {
-    setInkStyle({ left: e.currentTarget.offsetLeft, width: e.currentTarget.offsetWidth });
+    const { offsetLeft, offsetWidth } = e.currentTarget;
+    setInkStyle({ left: offsetLeft, width: offsetWidth, opacity: 1 });
   };
 
   const handleMouseLeave = () => {
-    setInkStyle({});
+    // This sets opacity to 0, which gets passed to the style prop below
+    setInkStyle(prev => ({ ...prev, opacity: 0 }));
   };
 
   return (
-    /* THE FIX: Pass the mode to the styles */
     <NavContainer $isArtMode={isArtMode}>
       <NavName to="/">darin</NavName>
       
       <NavLinks onMouseLeave={handleMouseLeave}>
-        <MagicInk {...inkStyle} />
+        {/* We pass specific props + style object for opacity + isArtMode */}
+        <MagicInk 
+            left={inkStyle.left} 
+            width={inkStyle.width} 
+            style={{ opacity: inkStyle.opacity }}
+            $isArtMode={isArtMode}
+        />
         {currentLinks.map(link => (
-          <NavLink key={link.label} smooth to={link.path} onMouseEnter={handleMouseEnter}>
+          <NavLink 
+            key={link.label} 
+            smooth 
+            to={link.path} 
+            onMouseEnter={handleMouseEnter}
+          >
             {link.label}
           </NavLink>
         ))}
       </NavLinks>
 
       <RightSection>
-        <PortalLink to={isArtMode ? '/' : '/art'}>
-          {isArtMode ? 'dev ↗' : 'art ↗'}
-        </PortalLink>
+        {isArtMode ? (
+          <SwitchButton to="/" $direction="left">
+            <NavArrow $direction="left">←</NavArrow>
+            dev
+          </SwitchButton>
+        ) : (
+          <SwitchButton to="/art" $direction="right">
+            art
+            <NavArrow $direction="right">→</NavArrow>
+          </SwitchButton>
+        )}
       </RightSection>
     </NavContainer>
   );

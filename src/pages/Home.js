@@ -16,14 +16,14 @@ const Home = () => {
       description: "A motor control system designed to manage the speed and direction of a DC motor using PWM signals via SPI.",
       tech: ["C"],
       link: "https://github.com/darin-noronha/motor_application",
-      image: "/mark.png"
+      image: "/es.jpg"
     },
     {
       title: "Sequential Calculator",
       description: "Designed and implemented a sequential calculator in Verilog using a Finite State Machine (FSM).",
       tech: ["Verilog", "SystemVerilog"],
       link: "https://github.com/darin-noronha/FPGA_Calculator",
-      image: "/es.jpg"
+      image: "/mark.png"
     },
     {
       title: "Website V1",

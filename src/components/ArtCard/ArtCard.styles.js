@@ -68,9 +68,8 @@ export const Overlay = styled(motion.div)`
   left: 0;
   right: 0;
   bottom: 0;
-  /* Using theme var for background, usually dark in both modes for cinema view */
   background-color: var(--matting-bg); 
-  z-index: 1000; /* Must sit on top of everything including navbar */
+  z-index: 1000;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -80,18 +79,36 @@ export const Overlay = styled(motion.div)`
 
 export const FullScreenImage = styled(motion.img)`
   max-width: 90vw;
-  max-height: 80vh;
+  max-height: 60vh; /* Reduced slightly to make room for text */
   object-fit: contain;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   border-radius: 4px;
+  box-shadow: var(--gallery-shadow);
 `;
 
-export const FullScreenDesc = styled(motion.p)`
-  font-family: var(--font-heading);
-  color: var(--primary-text);
-  font-size: 1.1rem;
+// Container for the text block to ensure alignment
+export const FullScreenTextContainer = styled(motion.div)`
   text-align: center;
   max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--primary-text);
+`;
+
+export const FullScreenTitle = styled(motion.h2)`
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  margin: 0;
+  font-weight: normal;
+`;
+
+export const FullScreenMeta = styled(motion.p)`
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--accent-color); /* Highlight the medium */
+  margin: 0;
+  margin-bottom: 1rem;
 `;
 
 // The Button Container
