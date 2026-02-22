@@ -1,41 +1,60 @@
 import React from 'react';
+import { 
+  HeroContainer, TerminalWindow, TerminalHeader, 
+  CommandLine, PromptString, BlinkingCursor 
+} from './Hero.styles';
 
-import { HeroContainer, HeroSubtitle, HeroBio, InterestLinks, InteractiveLink, HoverWord, PopupImage } from './Hero.styles';
+const TypewriterLine = ({ text, delay, isCommand, prompt }) => {
+  return (
+    <CommandLine 
+      $isCommand={isCommand}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay, duration: 0.1 }}
+    >
+      {prompt && <PromptString>{prompt}</PromptString>}
+      {text}
+    </CommandLine>
+  );
+};
 
 const Hero = () => {
   return (
     <HeroContainer id="home">
-      <HeroSubtitle>bio</HeroSubtitle>
-      <HeroBio>
-        hi, i'm a junior at umich studying computer engineering and exploring the overlap of ai, hardware, and business.
-        i'm from boise, idaho so i naturally love the <HoverWord>outdoors<PopupImage src="/idaho.jpg"/></HoverWord>. i also love:
+      <TerminalWindow
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <TerminalHeader>
+          <span /><span /><span />
+        </TerminalHeader>
 
-      </HeroBio>
-      <InterestLinks>
-        {}
-        <InteractiveLink 
-          as="a" 
-          href="https://substack.com/@darinnoronha?utm_campaign=profile&utm_medium=profile-page" 
-          target="_blank" 
-          rel="noopener noreferrer"
+        <TypewriterLine 
+          prompt="darin@umich-sys:~$" 
+          text="cat bio.txt" 
+          delay={0.2} 
+          isCommand 
+        />
+        
+        <CommandLine 
+          $spacing 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          transition={{ delay: 0.5 }}
         >
-          <span>&rarr;</span> writing
-        </InteractiveLink>
+          hi, i'm a junior at umich studying computer engineering and exploring the overlap of ai, hardware, and business. i'm from boise, idaho so i naturally love the outdoors.
+        </CommandLine>
 
-        <InteractiveLink 
-          as="a" 
-          href="https://open.spotify.com/playlist/12b6uOyoaApLxkcfQWDjhw?si=8e572f6d4e0a4b91" 
-          target="_blank" 
-          rel="noopener noreferrer"
+        <CommandLine
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          transition={{ delay: 0.8 }}
         >
-          <span>&rarr;</span> music
-        </InteractiveLink>
-
-        {}
-        <InteractiveLink to="/art">
-          <span>&rarr;</span> art
-        </InteractiveLink>
-      </InterestLinks>
+          <PromptString>darin@umich-sys:~$</PromptString>
+          <BlinkingCursor />
+        </CommandLine>
+      </TerminalWindow>
     </HeroContainer>
   );
 };

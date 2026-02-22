@@ -1,104 +1,68 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom'; 
+import styled, { keyframes } from 'styled-components';
+import { motion } from 'framer-motion';
+
+const blink = keyframes`
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+`;
 
 export const HeroContainer = styled.section`
-  /* Keep these properties */
   min-height: 50vh;
-  padding-top: 0rem;
-  padding-bottom: 6rem;
+  padding-top: 2rem;
+  padding-bottom: 4rem;
   scroll-margin-top: 70px;
-
-  max-width: 600px; 
-  margin-left: auto;   
-  margin-right: auto;  
+  max-width: 700px; 
+  margin: 0 auto;  
 `;
 
-export const HeroTitle = styled.h1`
-  font-size: 3.5rem;
-  font-weight: 700;
-  color: var(--primary-text);
-  margin-bottom: 0.5rem;
+// The Terminal Window
+export const TerminalWindow = styled(motion.div)`
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-card);
+  padding: 1.5rem;
+  font-family: var(--font-body);
+  box-shadow: 0 10px 30px -15px rgba(0,0,0,0.5);
+  overflow: hidden;
 `;
 
-export const HeroSubtitle = styled.h2`
-  font-size: 2.5rem;
-  font-weight: 400;
-  color: var(--accent);
+export const TerminalHeader = styled.div`
+  display: flex;
+  gap: 8px;
   margin-bottom: 1.5rem;
-  text-align: left; 
-`;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
 
-export const HeroBio = styled.p`
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: var(--secondary-text);
-  max-width: 600px;
-  margin-bottom: 2rem;
-`;
-
-export const InterestLinks = styled.div`
-
-  flex-direction: column; 
-  display: flex;
-  gap: 1rem;
-`;
-
-export const InteractiveLink = styled(Link)`
-  color: var(--primary-text);
-  text-decoration: none;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  position: relative;
-  transition: color 0.3s ease;
-  width: fit-content;
-
-  /* arrow element */
+  /* macOS style window buttons */
   span {
-    color: var(--primary-text);
-    opacity: 0;
-    width: 0;
-    overflow: hidden; /* Prevents the arrow from being visible when width is 0 */
-    transition: all 0.35s ease;
-  }
-
-  &:hover {
-    color: var(--primary-text);
-    span {
-      opacity: 1;
-      width: 20px;
-      margin-right: 0.1rem; 
-    }
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    &:nth-child(1) { background-color: #ff5f56; } /* Close */
+    &:nth-child(2) { background-color: #ffbd2e; } /* Minimize */
+    &:nth-child(3) { background-color: #27c93f; } /* Maximize */
   }
 `;
 
-export const PopupImage = styled.img`
-  position: absolute;
-  width: 120px;  
-  height: 100px; 
-  object-fit: cover;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-
-  bottom: 120%; 
-  left: 50%;
-
-  opacity: 0;
-  transform: translateX(-50%) scale(0.9);
-  transition: all 0.3s ease-in-out;
-  pointer-events: none;
+export const CommandLine = styled(motion.div)`
+  color: ${props => props.$isCommand ? 'var(--accent-color)' : 'var(--secondary-text)'};
+  margin-bottom: ${props => props.$spacing ? '1.5rem' : '0.5rem'};
+  font-size: 0.95rem;
+  line-height: 1.6;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
-export const HoverWord = styled.span`
-  position: relative; 
+export const PromptString = styled.span`
+  color: #c678dd; /* Tech purple for the user/sys prompt */
+  margin-right: 10px;
+`;
+
+export const BlinkingCursor = styled.span`
   display: inline-block;
-  color: var(--primary-text);
-  cursor: pointer;
-
- 
-  &:hover ${PopupImage} {
-    opacity: 1;
-    transform: translateX(-50%) scale(1); 
-    pointer-events: all;
-  }
+  width: 8px;
+  height: 15px;
+  background-color: var(--accent-color);
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: ${blink} 1s step-end infinite;
 `;
