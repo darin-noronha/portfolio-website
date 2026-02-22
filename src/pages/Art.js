@@ -30,7 +30,7 @@ const Art = () => {
     // 2.5 seconds gives the tree enough time to draw before fading away
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2800);
+    }, 3000);
 
     // Cleanup timer on unmount
     return () => clearTimeout(timer);

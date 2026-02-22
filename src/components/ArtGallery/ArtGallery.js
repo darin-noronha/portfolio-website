@@ -1,34 +1,40 @@
 import React from 'react';
-import styled from 'styled-components';
 import ArtCard from '../ArtCard/ArtCard';
+import { GalleryGrid, GridItem } from './ArtGallery.styles';
 
-export const GalleryGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr; 
-  /* 1. Massive gap for "breathing room" */
-  gap: 6rem; 
-  padding: 4rem 0;
-  width: 100%;
-  
-  /* 2. Wide container, so the 'cells' are big */
-  max-width: 1200px; 
-  margin: 0 auto;
-  
-  /* 3. Center the cards horizontally within their grid cells */
-  justify-items: center;
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      delayChildren: 0.3, 
+      staggerChildren: 0.15 
+    }
   }
-`;
+};
 
-const ArtGallery = ({ pieces = [] }) => {
-  if (!pieces.length) return <p>No artwork on display.</p>;
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { type: "spring", stiffness: 250, damping: 25 } 
+  }
+};
+
+const ArtGallery = ({ pieces }) => {
+  if (!pieces || pieces.length === 0) return null;
 
   return (
-    <GalleryGrid>
+    <GalleryGrid
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {pieces.map((piece, index) => (
-        <ArtCard key={index} piece={piece} />
+        <GridItem key={index} variants={itemVariants}>
+          <ArtCard piece={piece} />
+        </GridItem>
       ))}
     </GalleryGrid>
   );
