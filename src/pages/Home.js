@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Hero from '../components/Hero/Hero';
 import ProjectsGrid from '../components/ProjectsGrid/ProjectsGrid';
+import GridBackground from '../components/GridBackground/GridBackground'; 
 
 const HomeContainer = styled.div`
   width: 100%;
@@ -35,6 +36,7 @@ const Home = () => {
 
   return (
     <HomeContainer>
+      <GridBackground />
       <Hero />
       <ProjectsGrid projects={engineerProjects} />
     </HomeContainer>
